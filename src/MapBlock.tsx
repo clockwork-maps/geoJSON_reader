@@ -26,6 +26,8 @@ interface MBProps {
 export default function MapBlock(props: MBProps){
     const mID: string = props.mKey;
     const bURL: string = props.basemap.url;
+    const laID: string = `${mID}left`;
+    const baID: string = `${mID}bottom`;
     const [ready, setReady] = useState<boolean>(false);
     const [north, setNorth] = useState<number>();
     const [south, setSouth] = useState<number>();
@@ -42,14 +44,39 @@ export default function MapBlock(props: MBProps){
     }
     useEffect(()=>{
         if (north == undefined || south == undefined || east == undefined || west == undefined) return;
-        console.log('North: ', north, 'South: ', south, 'East: ', east, 'West: ', west);
+        const leftaxis: d3.Selection<SVGElement, unknown, HTMLElement, unknown> = d3.select(`#${laID}`);
+        leftaxis.node()!.innerHTML = '';
+        const labounds: DOMRect = leftaxis.node()!.getBoundingClientRect();
+        const laln: number = labounds.width;
+        const laht: number = labounds.height;
+        const lascale: d3.ScaleLinear<number, number, never> = d3.scaleLinear().domain([north, south]).nice().range([0, laht]);
+        const laxis: d3.Axis<d3.NumberValue> = d3.axisLeft(lascale);
+        laxis.ticks(3);
+        laxis.tickFormat((x: d3.NumberValue) => Number(x) > 0 ? `${Math.abs(Number(x))}N` : `${Math.abs(Number(x))}S`)
+        const labg = leftaxis.append<'g'>('g');
+        labg!.attr('transform', `translate(${laln*.9},0)`);
+        labg.call(laxis);
+        const bottomaxis: d3.Selection<SVGElement, unknown, HTMLElement, unknown> = d3.select(`#${baID}`);
+        bottomaxis.node()!.innerHTML = '';
+        const babounds: DOMRect = bottomaxis.node()!.getBoundingClientRect();
+        const baln: number = babounds.width;
+        const baht: number = babounds.height;
+        const bascale: d3.ScaleLinear<number, number, never> = d3.scaleLinear().domain([west, east]).nice().range([0, baln]);
+        const baxis: d3.Axis<d3.NumberValue> = d3.axisBottom(bascale);
+        baxis.ticks(3);
+        baxis.tickFormat((x: d3.NumberValue) => Number(x) > 0 ? `${Math.abs(Number(x))}E` : `${Math.abs(Number(x))}W`);
+        const babg = bottomaxis.append<'g'>('g');
+        babg!.attr('transform', `translate(0,${baht*.1})`);
+        babg.call(baxis);
+
     }, [north, east, south, west])
     return (
         <>
             <article className="mapBlock" key={mID} >
-                <svg className="leftAxis"></svg>
-                <svg className="bottomAxis"></svg>
-                <MapContainer center={[51.505, -0.09]} zoom={13} zoomControl={false} whenReady={()=>{setReady(true)}}>
+                <span className="mapTitle" >Testing Title</span>
+                <svg className="leftAxis" id={laID} ></svg>
+                <svg className="bottomAxis" id={baID} ></svg>
+                <MapContainer center={[51.505, -0.09]} zoom={16} zoomControl={false} whenReady={()=>{setReady(true)}} >
                     <TileLayer url={bURL} ></TileLayer>
                     {ready ? <MapEvents /> : null}
                 </MapContainer>

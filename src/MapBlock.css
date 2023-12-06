@@ -4,17 +4,26 @@
     width: 500px;
     display: grid;
     grid-template-areas: 
-    ' . . . .'
-    ' . l m m '
-    ' . l m m '
-    ' . . b b ';
-    grid-template-columns: 5% 10% 42.5% 42.5%;
-    grid-template-rows: 5% 42.5% 42.5% 10%;
+    ' . t t t . '
+    ' . l m m . '
+    ' . l m m . '
+    ' . . b b . '
+    ' . . . . . ';
+    grid-template-columns: 2.5% 10% 42.5% 42.5% 2.5%;
+    grid-template-rows: 5% 41.25% 41.25% 10% 2.5%;
 }
 
 .mapBlock > * {
     height: 100%;
     width: 100%;
+}
+
+.mapTitle {
+    grid-area: t;
+}
+
+.leftAxis, .bottomAxis{
+    overflow: visible;
 }
 
 .leftAxis{

@@ -4,7 +4,7 @@
     width: 500px;
     display: grid;
     grid-template-areas: 
-    ' . t t t . '
+    ' . . t t . '
     ' . l m m . '
     ' . l m m . '
     ' . . b b . '
@@ -20,6 +20,14 @@
 
 .mapTitle {
     grid-area: t;
+    border: none;
+    outline: none;
+    text-align: center;
+}
+
+.mapTitle:focus{
+    background-color: #282828;
+    color: #fff;
 }
 
 .leftAxis, .bottomAxis{

@@ -40,6 +40,20 @@ export default function MapBlock(props: MBProps){
         setSouth(bounds.getSouth());
         setEast(bounds.getEast());
         setWest(bounds.getWest());
+        map.on('move', ()=>{
+            let bounds: L.LatLngBounds = map.getBounds();
+            setNorth(bounds.getNorth());
+            setSouth(bounds.getSouth());
+            setEast(bounds.getEast());
+            setWest(bounds.getWest());
+        });
+        map.on('zoom', ()=>{
+            let bounds: L.LatLngBounds = map.getBounds();
+            setNorth(bounds.getNorth());
+            setSouth(bounds.getSouth());
+            setEast(bounds.getEast());
+            setWest(bounds.getWest());
+        });
         return null
     }
     useEffect(()=>{
@@ -73,7 +87,7 @@ export default function MapBlock(props: MBProps){
     return (
         <>
             <article className="mapBlock" key={mID} >
-                <span className="mapTitle" >Testing Title</span>
+                <input type="text" className="mapTitle" defaultValue={'Testing Title'} />
                 <svg className="leftAxis" id={laID} ></svg>
                 <svg className="bottomAxis" id={baID} ></svg>
                 <MapContainer center={[51.505, -0.09]} zoom={16} zoomControl={false} whenReady={()=>{setReady(true)}} >

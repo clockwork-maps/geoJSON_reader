@@ -49,3 +49,23 @@
     border-block-end: 1px solid rgba(0,0,0,0.1);
     border-inline-end: 1px solid rgba(0,0,0,0.1);
 }
+
+.refreshButton{
+    height: 30px;
+    width: 30px;
+    padding: 0px;
+    cursor: pointer;
+    border: 3px solid rgba(0,0,0,0.1);
+    outline: none;
+}
+
+.refreshButton:hover{
+    border: 3px solid rgba(0,0,0,0);
+    background-color: #f8d380;
+}
+
+@media print{
+    .refreshButton{
+        display: none;
+    }
+}

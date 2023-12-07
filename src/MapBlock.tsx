@@ -20,12 +20,16 @@ interface BMLayer {
 interface MBProps {
     mKey: string
     basemap: BMLayer,
+    center: number[],
+    zoom: number
     // layers: Layers,
 }
 
 export default function MapBlock(props: MBProps){
     const mID: string = props.mKey;
     const bURL: string = props.basemap.url;
+    const center: L.LatLngExpression = [props.center[0], props.center[1]];
+    const zoom: number = props.zoom;
     const laID: string = `${mID}left`;
     const baID: string = `${mID}bottom`;
     const [ready, setReady] = useState<boolean>(false);
@@ -40,6 +44,26 @@ export default function MapBlock(props: MBProps){
         setSouth(bounds.getSouth());
         setEast(bounds.getEast());
         setWest(bounds.getWest());
+        let refreshButton = L.Control.extend({
+            options: {
+                position: 'topleft'
+            },
+            onAdd: function(map: L.Map) {
+                let refresh: HTMLButtonElement = L.DomUtil.create<"button">('button', 'refreshButton');
+                refresh.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon-tabler-refresh" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#282828" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+                <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+                </svg>`
+                refresh.onclick = ()=>{ map.setView(center, zoom)};
+                return refresh;
+            },
+            onRemove: function(map: L.Map){
+
+            }
+        });
+        let rButton = new refreshButton();
+        if (document.getElementById(`${mID}`)!.querySelectorAll('.refreshButton').length < 1) map.addControl(rButton);
         map.on('move', ()=>{
             let bounds: L.LatLngBounds = map.getBounds();
             setNorth(bounds.getNorth());
@@ -90,7 +114,7 @@ export default function MapBlock(props: MBProps){
                 <input type="text" className="mapTitle" defaultValue={'Testing Title'} />
                 <svg className="leftAxis" id={laID} ></svg>
                 <svg className="bottomAxis" id={baID} ></svg>
-                <MapContainer center={[51.505, -0.09]} zoom={16} zoomControl={false} whenReady={()=>{setReady(true)}} >
+                <MapContainer id={mID} center={center} zoom={zoom} zoomControl={false} whenReady={()=>{setReady(true)}} >
                     <TileLayer url={bURL} ></TileLayer>
                     {ready ? <MapEvents /> : null}
                 </MapContainer>

@@ -8,7 +8,7 @@ function App() {
   };
   return (
     <>
-      <MapBlock mKey={'mappy'} basemap={placeholder} />
+      <MapBlock mKey={'mappy'} basemap={placeholder} center={[51.505, -0.09]} zoom={14}/>
         
     </>
   )

@@ -1,7 +1,5 @@
 .mapBlock {
     position: relative;
-    height: 500px;
-    width: 500px;
     display: grid;
     grid-template-areas: 
     ' . . t t . '

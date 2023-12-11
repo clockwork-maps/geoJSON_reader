@@ -4,8 +4,24 @@ html, *{
 }
 
 #root {
-  width: 1280px;
+  height: 100%;
+  width: 100%;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: #ddd;
+}
+
+.contentWrapper{
+  margin-inline: auto;
+  position: relative;
+  display: flow-root;
+  background-color: #fff;
+}
+
+.contentWrapper[data-orientation='portrait']{
+  --contentWidth: 90%;
+  --contentHeight: 30%;
+  height: 11in;
+  width: 8.5in;
 }

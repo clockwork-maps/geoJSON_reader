@@ -1,0 +1,64 @@
+.dataPreview{
+    width: 100%;
+    height: var(--contentHeight);
+    display: grid;
+    grid-template-areas:  
+    '. . . . .'
+    '. dd . dt .'
+    '. . . . .';
+    grid-template-columns: 5% 60.75% 2.25% 27% 5%;
+    grid-template-rows: 2.5% 95% 2.5%;
+    background-color: #B0E0E6;
+}
+
+.contentWrapper[data-orientation='portrait'] > .dataPreview {
+    margin-block-start: .25in;
+}
+
+.mapBlock.dataDisplay{
+    grid-area: dd;
+    background-color: #fff;
+}
+
+.mapBlock.dataDisplay,
+.mapBlock.dataDisplay > *,
+.mapBlock.dataDisplay > * > * {
+    color: #fff;
+    background-color: #B0E0E6;
+}
+
+.dataTable {
+    grid-area: dt;
+    display: grid;
+    grid-template-areas:  
+    'sR'
+    'dI';
+    grid-template-rows: 10% 90%;
+    border-radius: 0px 0px 15px 15px;
+    background-color: #fff;
+}
+
+.mapBlock.dataDisplay,
+.dataTable{
+    width: 100%;
+    height: 100%;
+}
+
+.spanRow{
+    grid-area: sR;
+    background-color: #F7EDB7;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+.srHeader{
+    margin-block-start: 2.5%;
+    padding-inline: 2.5px;
+    border-radius: 8px 8px 0px 0px;
+    border: 1px solid #000;
+}
+
+.dataInfo{
+    grid-area: dI;
+}

@@ -1,4 +1,9 @@
 .dataPreview{
+    --backgroundMain: #E63946;
+    --backgroundTabs: #FCBF49;
+    --tabUnfocused: color-mix(in srgb, var(--backgroundTabs) 67%, #FFF 33%);
+    --tabFocused: color-mix(in srgb, var(--backgroundTabs) 50%, #FFF 50%);
+    --tabSeperator: color-mix(in srgb, var(--backgroundTabs) 67%, var(--backgroundMain) 33%);
     width: 100%;
     height: var(--contentHeight);
     display: grid;
@@ -8,7 +13,7 @@
     '. . . . .';
     grid-template-columns: 5% 60.75% 2.25% 27% 5%;
     grid-template-rows: 2.5% 95% 2.5%;
-    background-color: #B0E0E6;
+    background-color: var(--backgroundMain);
 }
 
 .contentWrapper[data-orientation='portrait'] > .dataPreview {
@@ -24,7 +29,7 @@
 .mapBlock.dataDisplay > *,
 .mapBlock.dataDisplay > * > * {
     color: #fff;
-    background-color: #B0E0E6;
+    background-color: var(--backgroundMain);
 }
 
 .dataTable {
@@ -46,19 +51,82 @@
 
 .spanRow{
     grid-area: sR;
-    background-color: #F7EDB7;
+    background-color: var(--backgroundTabs);
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-around;
+    border-block-end: 2px solid var(--tabSeperator);
 }
 
 .srHeader{
     margin-block-start: 2.5%;
-    padding-inline: 2.5px;
+    padding-inline: 5px;
     border-radius: 8px 8px 0px 0px;
-    border: 1px solid #000;
+    background-color: var(--tabUnfocused);
 }
 
 .dataInfo{
     grid-area: dI;
+}
+
+.diTable{
+    margin-inline: auto;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+.diTable > * > *{
+    position: relative;
+}
+
+.diTable > * > *:nth-child(even) {
+    background-color: var(--tabFocused);
+}
+
+.diTable > * > * > th {
+    max-width: 10ch;
+}
+
+.diTable > * > * > td {
+    max-width: 18ch;
+}
+
+.diTable > * > * > th,
+.diTable > * > * > td {
+    text-align: start;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: .8rem;
+    padding-block: 1px;
+    padding-inline: 1ch;
+    user-select: none;
+}
+
+.infoPopup{
+    user-select: none;
+    position: absolute;
+    z-index: 1000;
+    inset-block: 0px;
+    inset-inline-end: 0px;
+    padding-block: 1px;
+    padding-inline: 1ch;
+    width: fit-content;
+    max-width: 20vw;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    background-color: #282828;
+    color: #FFF;
+}
+
+.infoText{
+    font-size: .8rem;
+    font-weight: 550;
+    text-align: start;
+}
+
+.itHeader{
+    font-weight: 700;
+    color: var(--backgroundMain);
 }

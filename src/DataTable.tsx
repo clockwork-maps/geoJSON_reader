@@ -52,18 +52,20 @@ export default function DataTable(props: DTProps){
     function DTable(props: DTableProps){
         const tkeys: string[] | undefined = props.target !== undefined ? Object.keys(props.target as object) : undefined;
         return props.target !== undefined ? (
-            <table className="diTable">
-                <tbody>
-                    {tkeys!.map(key=>{
-                        return(
-                            <tr key={`${key}${Math.round(Math.random()*10)}`} >
-                                <th>{key}</th>
-                                <td>{props.parser !== "props" ? props.target![key] : typeof props.target![key]}</td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
+            <section className="diWrapper">
+                <table className="diTable">
+                    <tbody>
+                        {tkeys!.map(key=>{
+                            return(
+                                <tr key={`${key}${Math.round(Math.random()*10)}`} >
+                                    <th>{key}</th>
+                                    <td>{props.parser !== "props" ? props.target![key] : typeof props.target![key]}</td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </section>
         ) : (
             <>
                 <span className="promptText">Select a tab to draw a table</span>

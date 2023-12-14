@@ -62,18 +62,48 @@
     margin-block-start: 2.5%;
     padding-inline: 5px;
     border-radius: 8px 8px 0px 0px;
+    border-block-start: 2px solid rgba(0,0,0,0);
+    border-inline: 2px solid rgba(0,0,0,0);
     background-color: var(--tabUnfocused);
+    cursor: pointer;
+}
+
+.spanRow[data-flag="Meta"] > .srHeader.srMeta,
+.spanRow[data-flag="Finfo"] > .srHeader.srFinfo,
+.spanRow[data-flag="Ginfo"] > .srHeader.srGinfo,
+.spanRow[data-flag="Props"] > .srHeader.srProps{
+    background-color: var(--tabFocused);
+    border-block-start: 2px solid var(--tabSeperator);
+    border-inline: 2px solid var(--tabSeperator);
 }
 
 .dataInfo{
     grid-area: dI;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.dataInfo::-webkit-scrollbar{
+    display: none;
 }
 
 .diTable{
     margin-inline: auto;
     border-collapse: collapse;
     border-spacing: 0px;
+    table-layout: fixed;
+    width: 95%;
 }
+
+/* commented code responsible for trying to find logic to 
+have a breakout table cell section on hover. both with a 
+dialog popup (something broke the reliablity of that 
+implementation) and pure CSS (reliable, can't get working
+as intended). */
+
+/* .diTable > tbody {
+    display: block;
+} */
 
 .diTable > * > *{
     position: relative;
@@ -84,11 +114,11 @@
 }
 
 .diTable > * > * > th {
-    max-width: 10ch;
+    width: 10ch;
 }
 
 .diTable > * > * > td {
-    max-width: 18ch;
+    width: 15ch;
 }
 
 .diTable > * > * > th,
@@ -101,6 +131,27 @@
     padding-block: 1px;
     padding-inline: 1ch;
     user-select: none;
+}
+
+/* .diTable > * > * > *:hover {
+    z-index: 1000;
+    display: block;
+    width: min-content;
+    max-width: 14ch;
+    height: min-content;
+    overflow: visible;
+    white-space: wrap;
+    text-overflow: clip;
+    background-color: #282828;
+    font-weight: 550;
+}
+
+.diTable > * > * > th:hover {
+    color: var(--backgroundMain);
+}
+
+.diTable > * > * > td:hover{
+    color: #FFF;
 }
 
 .infoPopup{
@@ -129,4 +180,4 @@
 .itHeader{
     font-weight: 700;
     color: var(--backgroundMain);
-}
+} */

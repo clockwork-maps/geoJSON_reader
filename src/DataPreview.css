@@ -69,7 +69,7 @@
 }
 
 .spanRow[data-flag="Meta"] > .srHeader.srMeta,
-.spanRow[data-flag="Finfo"] > .srHeader.srFinfo,
+.spanRow[data-flag="FKeys"] > .srHeader.srFKeys,
 .spanRow[data-flag="Ginfo"] > .srHeader.srGinfo,
 .spanRow[data-flag="Props"] > .srHeader.srProps{
     background-color: var(--tabFocused);
@@ -131,7 +131,7 @@ as intended). */
 .diTable > * > * > th,
 .diTable > * > * > td {
     text-align: start;
-    overflow: hidden;
+    overflow: clip;
     white-space: nowrap;
     text-overflow: ellipsis;
     font-size: .8rem;
@@ -160,6 +160,8 @@ as intended). */
 .diTable > * > * > td:hover{
     color: #FFF;
 }
+
+/*
 
 .infoPopup{
     user-select: none;

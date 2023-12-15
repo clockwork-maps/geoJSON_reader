@@ -27,21 +27,17 @@ interface DTProps{
 export default function DataTable(props: DTProps){
     const [panelTarget, setPanelTarget] = useState<metadataTypes | GeoJsonProperties | undefined>();
     const [panelType, setPanelType] = useState<dtVal | undefined>();
-    const [panelFlag, setPanelFlag] = useState<"Meta" | "Finfo" | "Ginfo" | "Props" | "undefined">("undefined")
+    const [panelFlag, setPanelFlag] = useState<"Meta" | "FKeys" | "Ginfo" | "Props" | "undefined">("undefined")
     const data: rawExpected = props.data;
     const metadata: metadataTypes | undefined = data != undefined ? data.metadata : undefined;
     const features: Array<Feature<Geometry, GeoJsonProperties>> | undefined = data.features;
-    const fKeys: string[] | undefined = Object.keys(features![0].properties as object);
-    const finfo: {[index:string]: string | number | undefined} = {
-        "length" : features!.length,
-        "fkeys" : (Object.keys(features![0] as object) as Array<string>).join(', ')
-    }
+    const fPKeys: string[] | undefined = Object.keys(features![0].properties as object);
     const geometries : Geometry[] | undefined = data.geometries;
-    const headerBools: boolean[] = [metadata != undefined, features != undefined, geometries != undefined,  fKeys != undefined];
-    const headers: ("Meta" | "Finfo" | "Ginfo" | "Props")[] = ["Meta", "Finfo", "Ginfo", "Props"];
-    const tableObjects: {[index: string]: metadataTypes | GeoJsonProperties | {[index:string]: string | number | undefined} | Geometry[] | undefined} = {
+    const headerBools: boolean[] = [metadata != undefined, features != undefined, geometries != undefined,  fPKeys != undefined];
+    const headers: ("Meta" | "FKeys" | "Ginfo" | "Props")[] = ["Meta", "FKeys", "Ginfo", "Props"];
+    const tableObjects: {[index: string]: metadataTypes | GeoJsonProperties | Feature<Geometry, GeoJsonProperties> | Geometry[] | undefined} = {
         "Meta" : metadata,
-        "Finfo" : finfo,
+        "FKeys" : features![0],
         "Ginfo": geometries,
         "Props" : features![0].properties
     }
@@ -59,7 +55,7 @@ export default function DataTable(props: DTProps){
                             return(
                                 <tr key={`${key}${Math.round(Math.random()*10)}`} >
                                     <th>{key}</th>
-                                    <td>{props.parser !== "props" ? props.target![key] : typeof props.target![key]}</td>
+                                    <td>{props.parser === "metadata" ? props.target![key] : typeof props.target![key]}</td>
                                 </tr>
                             )
                         })}

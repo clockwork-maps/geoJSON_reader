@@ -35,9 +35,11 @@ export default function DataDisplay(props: MBProps){
     const center: L.LatLngExpression = [props.center[0], props.center[1]];
     const zoom: number = props.zoom;
     const data: FeatureCollection = props.data;
+    console.log(data);
     const laID: string = `${mID}left`;
     const baID: string = `${mID}bottom`;
     const [ready, setReady] = useState<boolean>(false);
+    const [fit, setFit] = useState<boolean>(false)
     const [north, setNorth] = useState<number>();
     const [south, setSouth] = useState<number>();
     const [east, setEast] = useState<number>();
@@ -63,8 +65,26 @@ export default function DataDisplay(props: MBProps){
             setEast(bounds.getEast());
             setWest(bounds.getWest());
         });
-        let dataLayer: L.GeoJSON = L.geoJSON(data);
-        if (!map.hasLayer(dataLayer)) dataLayer.addTo(map);
+        let datagroup: L.FeatureGroup = L.featureGroup([]);
+        let dataObj: {[index:string]: L.CircleMarker} = {};
+        (data.features as any).forEach((feature: any)=>{
+            let coords: number[] = feature.geometry.coordinates;
+            dataObj[feature.id] = L.circleMarker([coords[1],coords[0]],{
+                radius: 3,
+                stroke: false,
+                fill: true,
+                fillColor: '#E63946',
+                fillOpacity: .8
+            });
+            datagroup.addLayer(dataObj[feature.id]);
+        });
+        if (!map.hasLayer(datagroup)) datagroup.addTo(map);
+        if(!fit) {
+            map.fitBounds(datagroup.getBounds());
+            setFit(true);
+        }
+        // let dataLayer: L.GeoJSON = L.geoJSON(data);
+        // if (!map.hasLayer(dataLayer)) dataLayer.addTo(map);
         return null
     }
     useEffect(()=>{

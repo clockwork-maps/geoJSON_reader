@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import type { Geometry, GeoJsonProperties, Feature } from 'geojson'
+import { WeightedData, WData, WeightedObjects } from './WeightedData';
 
 type dtVal = "metadata" | "props" | "propTypes"
 
@@ -27,7 +28,8 @@ interface DTProps{
 export default function DataTable(props: DTProps){
     const [panelTarget, setPanelTarget] = useState<metadataTypes | GeoJsonProperties | undefined>();
     const [panelType, setPanelType] = useState<dtVal | undefined>();
-    const [panelFlag, setPanelFlag] = useState<"Meta" | "FKeys" | "Ginfo" | "Props" | "undefined">("undefined")
+    const [panelFlag, setPanelFlag] = useState<"Meta" | "FKeys" | "Ginfo" | "Props" | "undefined">("undefined");
+    // const [wData, setWData] = useContext<WeightedObjects[] | undefined>(WeightedData)
     const data: rawExpected = props.data;
     const metadata: metadataTypes | undefined = data != undefined ? data.metadata : undefined;
     const features: Array<Feature<Geometry, GeoJsonProperties>> | undefined = data.features;

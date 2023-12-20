@@ -35,7 +35,6 @@ export default function DataDisplay(props: MBProps){
     const center: L.LatLngExpression = [props.center[0], props.center[1]];
     const zoom: number = props.zoom;
     const data: FeatureCollection = props.data;
-    console.log(data);
     const laID: string = `${mID}left`;
     const baID: string = `${mID}bottom`;
     const [ready, setReady] = useState<boolean>(false);
@@ -70,11 +69,13 @@ export default function DataDisplay(props: MBProps){
         (data.features as any).forEach((feature: any)=>{
             let coords: number[] = feature.geometry.coordinates;
             dataObj[feature.id] = L.circleMarker([coords[1],coords[0]],{
-                radius: 3,
+                radius: 10,
                 stroke: false,
+                // color: '#383838',
+                // weight: 2,
                 fill: true,
-                fillColor: '#E63946',
-                fillOpacity: .8
+                fillColor: 'color-mix(in srgb, #E63946 80%, #FFF 20%)',
+                fillOpacity: .5
             });
             datagroup.addLayer(dataObj[feature.id]);
         });

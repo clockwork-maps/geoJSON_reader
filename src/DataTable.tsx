@@ -29,7 +29,8 @@ export default function DataTable(props: DTProps){
     const [panelTarget, setPanelTarget] = useState<metadataTypes | GeoJsonProperties | undefined>();
     const [panelType, setPanelType] = useState<dtVal | undefined>();
     const [panelFlag, setPanelFlag] = useState<"Meta" | "FKeys" | "Ginfo" | "Props" | "undefined">("undefined");
-    // const [wData, setWData] = useContext<WeightedObjects[] | undefined>(WeightedData)
+    const [wData, setWData] = useContext<WData>(WeightedData);
+    console.log('From DTable.tsx: ', wData);
     const data: rawExpected = props.data;
     const metadata: metadataTypes | undefined = data != undefined ? data.metadata : undefined;
     const features: Array<Feature<Geometry, GeoJsonProperties>> | undefined = data.features;

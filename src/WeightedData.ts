@@ -23,6 +23,6 @@ export interface WDMetadata {
 
 export type WeightedObjects =  { coords: CVals, props: LeafletVectorProps, meta?: WDMetadata };
 
-// export type WData = WeightedObjects[] | undefined;
+export type WData = WeightedObjects[];
 
-export const WeightedData = createContext<WeightedObjects[] | undefined>(undefined);
+export const WeightedData = createContext<WData>([]);

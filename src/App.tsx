@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { CVals, LeafletVectorProps, WDMetadata, WeightedObjects, WeightedData } from './WeightedData.ts'
+import { WeightedData, WData } from './WeightedData.ts'
 import { useState, useEffect } from 'react'
 import MapBlock from './MapBlock'
 import DataDisplay from './DataDisplay'
@@ -21,11 +21,12 @@ export default function App() {
     url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
     properties: {}
   };
-  const [wData, setWData] = useState<WeightedObjects[] | undefined>(undefined);
+  const [wData, setWData] = useState<WData>([]);
   useEffect(()=>{
     if (!isLoading) {
       const base = dataset.features!;
-      const holder: WeightedObjects[] | undefined = [];
+      console.log('base: ', base);
+      const holder: WData = [];
       base.forEach((feature: any)=>{
         let mholder: any = {}
         if (feature.geometry.type == 'Point') {
@@ -39,26 +40,28 @@ export default function App() {
           }
         }
         holder.push(mholder);
-      })
-      setWData(holder);
+      });
+      console.log('holder: ', holder);
+      setWData([...holder]);
     }
   },[isLoading]);
-  console.log(wData);
+  console.log('wData: ', [...wData]);
   return (
     <>
-    <WeightedData.Provider value={wData}>
-      <main className='app' data-orientation='portrait' >
-        <section className="controlHeader" ></section>
-        <section className="controlBox"></section>
-        <section className="contentWrapper">
-          <article className='dataPreview'>
-            {dataset !== undefined ? <DataDisplay mKey={'mappy'} basemap={placeholder} center={[51.505, -0.09]} zoom={10} data={dataset} /> : null}
-            {dataset !== undefined ? <DataTable data={dataset} /> : null}
-          </article>
-        </section>
-        {/* <MapBlock mKey={'mappy2'} basemap={placeholder} center={[51.505, -0.09]} zoom={14} mbstyle={{height: '450px', width: '450px' }}/> */}
-      </main>
-    </WeightedData.Provider>
+      {console.log('inside return: ', wData)}
+      <WeightedData.Provider value={[...wData]}>
+        <main className='app' data-orientation='portrait' >
+          <section className="controlHeader" ></section>
+          <section className="controlBox"></section>
+          <section className="contentWrapper">
+            <article className='dataPreview'>
+              {dataset !== undefined ? <DataDisplay mKey={'mappy'} basemap={placeholder} center={[51.505, -0.09]} zoom={10} data={dataset} /> : null}
+              {dataset !== undefined ? <DataTable data={dataset} /> : null}
+            </article>
+          </section>
+          {/* <MapBlock mKey={'mappy2'} basemap={placeholder} center={[51.505, -0.09]} zoom={14} mbstyle={{height: '450px', width: '450px' }}/> */}
+        </main>
+      </WeightedData.Provider>
     </>
   )
 }

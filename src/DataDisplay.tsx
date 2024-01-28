@@ -1,7 +1,6 @@
 import * as L from 'leaflet'
 import * as d3 from 'd3'
 import { MapContainer, TileLayer, useMap } from 'react-leaflet'
-// import { GeoJSON as GJSONLayer } from 'react-leaflet/GeoJSON'
 import { useEffect, useState } from 'react'
 import type { FeatureCollection } from 'geojson'
 import './MapBlock.css'
